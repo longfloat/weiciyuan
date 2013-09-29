@@ -13,9 +13,9 @@ public class AbstractAppFragment extends FixedOnActivityResultBugFragment {
      */
     private boolean isFirstTimeStartFlag = true;
 
-    protected final int FIRST_TIME_START = 0; //when activity is first time start
-    protected final int SCREEN_ROTATE = 1;    //when activity is destroyed and recreated because a configuration change, see setRetainInstance(boolean retain)
-    protected final int ACTIVITY_DESTROY_AND_CREATE = 2;  //when activity is destroyed because memory is too low, recycled by android system
+    protected static final int FIRST_TIME_START = 0; //when activity is first time start
+    protected static final int SCREEN_ROTATE = 1;    //when activity is destroyed and recreated because a configuration change, see setRetainInstance(boolean retain)
+    protected static final int ACTIVITY_DESTROY_AND_CREATE = 2;  //when activity is destroyed because memory is too low, recycled by android system
 
     protected int getCurrentState(Bundle savedInstanceState) {
 

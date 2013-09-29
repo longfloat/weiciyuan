@@ -1,5 +1,6 @@
 package org.qii.weiciyuan.support.utils;
 
+import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -584,7 +585,9 @@ public class Utility {
         return String.valueOf(number);
     }
 
-    public static void showExpiredTokenDialogOrNotification() {
+    @SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
+	public static void showExpiredTokenDialogOrNotification() {
         final Activity activity = GlobalContext.getInstance().getCurrentRunningActivity();
         boolean currentAccountTokenIsExpired = true;
         AccountBean currentAccount = GlobalContext.getInstance().getAccountBean();
@@ -646,7 +649,20 @@ public class Utility {
                     .setOnlyAlertOnce(true);
             NotificationManager notificationManager = (NotificationManager) GlobalContext.getInstance()
                     .getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(NotificationServiceHelper.getTokenExpiredNotificationId(), builder.build());
+            
+            //notificationManager.notify(NotificationServiceHelper.getTokenExpiredNotificationId(), builder.build());
+            
+            // Tong Liu
+            Notification notification = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            	notification = builder.build();
+            	
+			} else {
+				notification = builder.getNotification();
+			}
+            
+            notificationManager.notify(NotificationServiceHelper.getTokenExpiredNotificationId(), notification);
+            
         } else if (GlobalContext.getInstance().tokenExpiredDialogIsShowing) {
             NotificationManager notificationManager = (NotificationManager) GlobalContext.getInstance()
                     .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -710,16 +726,19 @@ public class Utility {
                     }
                 }
                 iv.setImageBitmap(null);
-                iv.setBackground(null);
+                //iv.setBackground(null);
+                iv.setBackgroundDrawable(null);
                 continue;
             }
 
 
-            child.setBackground(null);
+            //child.setBackground(null);
+            child.setBackgroundDrawable(null);
 
         }
 
-        viewGroup.setBackground(null);
+        //viewGroup.setBackground(null);
+        viewGroup.setBackgroundDrawable(null);
     }
 }
 
